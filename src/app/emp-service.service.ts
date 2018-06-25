@@ -1,11 +1,14 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { IEmployee } from './model/employee';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EmpServiceService {
-
-  emps = [
+  private url = 'http://localhost:5000/debtor';
+  private emps = [
     {"id": 1, "name": "test1"},
     {"id": 2, "name": "test2"},
     {"id": 3, "name": "test3"},
@@ -14,10 +17,11 @@ export class EmpServiceService {
     {"id": 6, "name": "test6"}
   ];
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
-  getAllEmps() {
-    return this.emps;
+  getAllEmps(): Observable<IEmployee[]> {
+    //return this.emps;
+    return this.http.get<IEmployee[]>(this.url);
   }
 
 }
